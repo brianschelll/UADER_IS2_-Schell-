@@ -1,18 +1,17 @@
 #!/usr/bin/python
-#*-------------------------------------------------------------------------*
-#* factorial.py                                                            *
-#* calcula el factorial de un número o un rango de números                 *
-#* Dr.P.E.Colla (c) 2022                                                   *
-#* Modificado por: [Brian]                                                 *
-#* Creative commons                                                        *
-#*-------------------------------------------------------------------------*
+# *-------------------------------------------------------------------------*
+# * factorial.py                                                            *
+# * Calcula el factorial de un número o un rango de números                 *
+# * Dr.P.E.Colla (c) 2022 - Modificado en 2025                              *
+# * Creative Commons                                                        *
+# *-------------------------------------------------------------------------*
 
 import sys
 
 def factorial(num): 
+    
     if num < 0: 
-        print(f"Factorial de {num} no existe")
-        return None
+        return None  
     elif num == 0: 
         return 1
     else: 
@@ -22,31 +21,46 @@ def factorial(num):
             num -= 1
         return fact 
 
-def calcular_factoriales(desde, hasta):
-    for num in range(desde, hasta + 1):
-        print(f"Factorial {num}! es {factorial(num)}")
 
-# Obtener el argumento o solicitar entrada manual
-if len(sys.argv) > 1:
+if len(sys.argv) < 2:
+    entrada = input("Ingrese un número o un rango (ej. 4-8, -10, 5-): ")
+else:
     entrada = sys.argv[1]
+
+
+desde, hasta = None, None
+
+if "-" in entrada:
+    partes = entrada.split("-")
+    
+    if entrada.startswith("-") and partes[1].isdigit():
+        
+        desde = 1
+        hasta = int(partes[1])
+    
+    elif entrada.endswith("-") and partes[0].isdigit():
+        
+        desde = int(partes[0])
+        hasta = 60
+    
+    elif partes[0].isdigit() and partes[1].isdigit():
+        
+        desde = int(partes[0])
+        hasta = int(partes[1])
+
 else:
-    entrada = input("Ingrese un número o un rango (ej. 4-8): ")
-
-# Verificar si es un rango o un solo número
-if '-' in entrada:
-    try:
-        desde, hasta = map(int, entrada.split('-'))
-        if desde > hasta:
-            print("Error: el primer número debe ser menor o igual al segundo.")
-        else:
-            calcular_factoriales(desde, hasta)
-    except ValueError:
-        print("Formato inválido. Use un solo número o un rango en formato desde-hasta.")
-else:
-    try:
-        num = int(entrada)
-        print(f"Factorial {num}! es {factorial(num)}")
-    except ValueError:
-        print("Ingrese un número válido.")
+    
+    desde = hasta = int(entrada)
 
 
+if desde is not None and desde < 0:
+    print(f"El factorial de {desde} no está definido.")
+    sys.exit(1)
+if hasta is not None and hasta < 0:
+    print(f"El factorial de {hasta} no está definido.")
+    sys.exit(1)
+
+
+for num in range(desde, hasta + 1):
+    resultado = factorial(num)
+    print(f"Factorial de {num}: {resultado}")
