@@ -17,9 +17,9 @@ except ImportError:
 readline  # Mantener readline como usado para evitar warning de pylint
 
 # Configuración de la API Key
-genai.configure(api_key="AIzaSyCsJDmvib4-Xr3z3hdxJVoodO4xeProL70")
+genai.configure(api_key="GEMINI_API_KEY")
 
-# Inicialización del modelo Gemini 1.5 Flash
+# Inicialización del modelo Gemini 2.0 Flash
 model = genai.GenerativeModel("gemini-2.0-flash")
 
 def main():
